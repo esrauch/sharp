@@ -1,6 +1,7 @@
 import { Tool } from "./tool.js";
 import { canvas } from "../dom.js"
 import { systems } from "../systems.js";
+import { XY } from "../model.js";
 
 
 export class PanTool extends Tool {
@@ -14,8 +15,6 @@ export class PanTool extends Tool {
         canvas.addEventListener('touchmove', onTouchMove, { signal })
     }
 }
-
-type XY = { x: number, y: number }
 
 function xyForMouseEvent(evt: MouseEvent): XY {
     return {

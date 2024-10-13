@@ -13,7 +13,10 @@ export class Tool {
             console.error('disabled tool that was not enabled?', this);
             return;
         }
+        this.disableInternal();
         this.abortController.abort();
         this.abortController = null;
     }
+    enableInternal(signal) { }
+    disableInternal() { }
 }
