@@ -4,7 +4,6 @@ import { systems } from "../systems.js"
 
 export function initMouse() {
     canvas.addEventListener('click', onMouseClick)
-
     canvas.addEventListener('mousewheel', onMouseWheel)
     canvas.addEventListener('mousemove', onMouseMove)
 }

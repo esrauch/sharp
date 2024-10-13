@@ -15,5 +15,6 @@
             "es2017.object"
         ],
         "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
     }
 }
