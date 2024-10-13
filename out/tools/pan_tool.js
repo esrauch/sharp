@@ -2,6 +2,10 @@ import { Tool } from "./tool.js";
 import { canvas } from "../dom.js";
 import { systems } from "../systems.js";
 export class PanTool extends Tool {
+    constructor() {
+        super(...arguments);
+        this.name = 'Pan';
+    }
     enableInternal(signal) {
         canvas.addEventListener('click', onMouseClick, { signal });
         canvas.addEventListener('mousewheel', onMouseWheel, { signal });

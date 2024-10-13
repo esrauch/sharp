@@ -11,6 +11,8 @@ function xyForMouseEvent(evt: MouseEvent): XY {
 }
 
 export class PolyTool extends Tool {
+    readonly name = 'Poly'
+
     private el: Poly | null = null
 
     protected override enableInternal(signal: AbortSignal): void {

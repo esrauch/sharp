@@ -5,6 +5,8 @@ import { XY } from "../model.js";
 
 
 export class PanTool extends Tool {
+    readonly name = 'Pan'
+
     protected override enableInternal(signal: AbortSignal): void {
         canvas.addEventListener('click', onMouseClick, { signal })
         canvas.addEventListener('mousewheel', onMouseWheel, { signal })

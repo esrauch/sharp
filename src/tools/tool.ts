@@ -1,6 +1,9 @@
 
 export abstract class Tool {
     private abortController: AbortController | null = null
+
+    readonly abstract name: string
+
     enable() {
         if (this.abortController) console.error('double tool enable?', this)
         this.abortController = new AbortController()

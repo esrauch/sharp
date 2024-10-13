@@ -10,6 +10,7 @@ function xyForMouseEvent(evt) {
 export class PolyTool extends Tool {
     constructor() {
         super(...arguments);
+        this.name = 'Poly';
         this.el = null;
     }
     enableInternal(signal) {

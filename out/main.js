@@ -8,9 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { systems } from "./systems.js";
+import { ToolSelect } from "./ui/tool_select.js";
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
         systems.renderer.render();
+        new ToolSelect().register();
     });
 }
 start();

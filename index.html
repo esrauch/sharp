@@ -18,6 +18,23 @@
             height: 100%;
             position: absolute;
         }
+
+        .leftToolbar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 72px;
+        }
+
+        .toolBtn {
+            border: 1px solid white;
+            margin: 3px;
+        }
+
+        .toolBtn.activeTool {
+            border-color: #f33;
+        }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
@@ -25,6 +42,11 @@
 <body>
     <div class="cavas_parent">
         <canvas width="800" height="600"></canvas>
+    </div>
+    <div class="leftToolbar">
+        <div class="toolBtn" data-tool-name="Null">Null</div>
+        <div class="toolBtn" data-tool-name="Pan">Pan</div>
+        <div class="toolBtn" data-tool-name="Poly">Poly</div>
     </div>
 
     <script type="module" src="out/main.js"></script>
