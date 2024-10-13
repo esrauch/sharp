@@ -7,15 +7,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const canvas = document.querySelector('canvas');
-export function trueSizeCanvas() {
-    canvas.width = Math.max(1, parseInt(getComputedStyle(canvas).width)) * devicePixelRatio;
-    canvas.height = Math.max(1, parseInt(getComputedStyle(canvas).height)) * devicePixelRatio;
-}
+import { systems } from "./systems.js";
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
-        trueSizeCanvas();
-        new ResizeObserver(trueSizeCanvas).observe(canvas);
+        systems.renderer.render();
     });
 }
 start();
