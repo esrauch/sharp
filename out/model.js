@@ -1,9 +1,46 @@
-import { Camera } from "./camera.js";
-import { Renderer } from "./renderer.js";
 export class Model {
     constructor() {
-        this.cam = new Camera();
-        this.renderer = new Renderer();
+        this.doc = {
+            root: {
+                type: 'Group',
+                elements: [
+                    { type: 'Rect', x: -10, y: -10, w: 20, h: 20 },
+                    { type: 'Rect', x: 20, y: -10, w: 20, h: 20 },
+                    { type: 'Rect', x: 50, y: -10, w: 20, h: 20, 'fillStyle': '#f00' },
+                ]
+            },
+            bg: '#fff',
+            fg: '#f88',
+        };
+    }
+    render(ctx) {
+        const bounds = new Path2D();
+        bounds.rect(0, 0, 1080, 1080);
+        ctx.fillStyle = this.doc.bg;
+        ctx.fill(bounds);
+        ctx.clip(bounds);
+        ctx.fillStyle = this.doc.fg;
+        this.renderElement(ctx, this.doc.root);
+    }
+    renderElement(ctx, el) {
+        const mustSave = el.transform || (el.fillStyle !== ctx.fillStyle);
+        if (mustSave)
+            ctx.save();
+        if (el.transform) {
+            ctx.setTransform(ctx.getTransform().multiply(el.transform));
+        }
+        if (el.fillStyle)
+            ctx.fillStyle = el.fillStyle;
+        switch (el.type) {
+            case "Group":
+                for (const child of el.elements)
+                    this.renderElement(ctx, child);
+                break;
+            case "Rect":
+                ctx.fillRect(el.x, el.y, el.w, el.h);
+                break;
+        }
+        if (mustSave)
+            ctx.restore();
     }
 }
-export const model = new Model();
