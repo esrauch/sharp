@@ -1,3 +1,4 @@
+import { Listenable } from "./listenable.js";
 import { NullTool } from "./tools/null_tool.js";
 import { PanTool } from "./tools/pan_tool.js";
 import { PolyTool } from "./tools/poly_tool.js";
@@ -12,10 +13,11 @@ const TOOLS = new Map<string, Tool>()
     addTool(new PolyTool())
 }
 
-export class ToolSystem {
+export class ToolSystem extends Listenable {
     private active: Tool = new NullTool()
 
     constructor() {
+        super()
         this.active.enable()
     }
 
@@ -27,6 +29,7 @@ export class ToolSystem {
         this.active.disable()
         this.active = newTool
         newTool.enable()
+        this.triggerListeners()
     }
 
     activateToolNamed(name: string) {

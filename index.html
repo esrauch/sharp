@@ -25,15 +25,27 @@
             bottom: 0;
             left: 0;
             width: 72px;
+            border-right: 1px solid white;
         }
 
-        .toolBtn {
+        .leftToolbar hr {
+            border-bottom: 1px solid white;
+            margin: 15px 0;
+        }
+
+        .leftBtn {
             border: 1px solid white;
             margin: 3px;
         }
 
-        .toolBtn.activeTool {
+        .leftBtn.activeTool {
             border-color: #f33;
+        }
+
+        .fg,
+        .bg {
+            height: 24px;
+            width: 24px;
         }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -44,9 +56,18 @@
         <canvas width="800" height="600"></canvas>
     </div>
     <div class="leftToolbar">
-        <div class="toolBtn" data-tool-name="Null">Null</div>
-        <div class="toolBtn" data-tool-name="Pan">Pan</div>
-        <div class="toolBtn" data-tool-name="Poly">Poly</div>
+        <div class="toolBtn leftBtn" data-tool-name="Null">Null</div>
+        <div class="toolBtn leftBtn" data-tool-name="Pan">Pan</div>
+        <div class="toolBtn leftBtn" data-tool-name="Poly">Poly</div>
+
+        <hr>
+
+        <div>Fg <input type="color" class="fg"></input>
+        </div>
+
+        <div>Bg <input type="color" class="bg"></input>
+        </div>
+        <hr>
     </div>
 
     <script type="module" src="out/main.js"></script>

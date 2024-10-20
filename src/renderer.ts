@@ -32,8 +32,6 @@ export class Renderer {
         const cam = systems.cam
         ctx.setTransform(cam.getTransform())
 
-        ctx.strokeStyle = '#f55'
-        ctx.lineWidth = 3
         systems.model.render(ctx)
     }
 }

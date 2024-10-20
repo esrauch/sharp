@@ -26,8 +26,6 @@ export class Renderer {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         const cam = systems.cam;
         ctx.setTransform(cam.getTransform());
-        ctx.strokeStyle = '#f55';
-        ctx.lineWidth = 3;
         systems.model.render(ctx);
     }
 }

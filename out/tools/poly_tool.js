@@ -25,16 +25,15 @@ export class PolyTool extends Tool {
     }
     finishElement() {
         this.el = null;
-        systems.model.doc.selectedElement = undefined;
-        systems.renderer.render();
+        systems.model.doc().selectedElement = undefined;
     }
     pointerDown(evt) {
         if (!this.el) {
             this.el = systems.model.addNewPoly();
-            systems.model.doc.selectedElement = this.el.id;
+            systems.model.doc().selectedElement = this.el.id;
         }
         const xy = systems.cam.mapInverse(xyForMouseEvent(evt));
         this.el.pts.push(xy);
-        systems.renderer.render();
+        systems.model.doc(); // Touch doc for render side effect
     }
 }

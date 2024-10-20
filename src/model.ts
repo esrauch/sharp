@@ -1,3 +1,5 @@
+import { systems } from "./systems.js"
+
 export type XY = {
     x: number,
     y: number,
@@ -58,31 +60,36 @@ function cachedPath(el: Rect | Poly) {
 }
 
 export class Model {
-    readonly doc: Document = {
+    private doc_: Document = {
         root: {
             type: 'Group',
             id: 0,
             elements: [
-                { id: 1, type: 'Rect', x: -10, y: -10, w: 20, h: 20 },
-                { id: 2, type: 'Rect', x: 20, y: -10, w: 20, h: 20 },
-                { id: 3, type: 'Rect', x: 50, y: -10, w: 20, h: 20, 'fillStyle': '#f00' },
             ]
         },
-        bg: '#fff',
-        fg: '#f88',
+        bg: '#ddddbb',
+        fg: '#ff8888',
         nextId: 0,
+    }
+
+    doc() {
+        systems.renderer.render()
+        return this.doc_
     }
 
     render(ctx: CanvasRenderingContext2D) {
         const bounds = new Path2D()
         bounds.rect(0, 0, 1080, 1080)
 
-        ctx.fillStyle = this.doc.bg
+        ctx.fillStyle = this.doc_.bg
         ctx.fill(bounds)
 
+        ctx.strokeStyle = '#fff'
+        ctx.stroke(bounds)
+
         ctx.clip(bounds)
-        ctx.fillStyle = this.doc.fg
-        this.renderElement(ctx, this.doc.root)
+        ctx.fillStyle = this.doc_.fg
+        this.renderElement(ctx, this.doc_.root)
     }
 
     private renderElement(ctx: CanvasRenderingContext2D, el: Element) {
@@ -105,7 +112,7 @@ export class Model {
                 const p = cachedPath(el)
                 ctx.fill(p)
 
-                if (this.doc.selectedElement == el.id)
+                if (this.doc_.selectedElement == el.id)
                     ctx.stroke(p)
                 break
             default:
@@ -118,10 +125,10 @@ export class Model {
     addNewPoly(): Poly {
         const poly: Poly = {
             type: 'Poly',
-            id: this.doc.nextId++,
+            id: this.doc_.nextId++,
             pts: [],
         }
-        this.doc.root.elements.push(poly)
+        this.doc_.root.elements.push(poly)
         return poly
     }
 }
