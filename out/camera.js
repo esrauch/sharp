@@ -1,10 +1,9 @@
 import { canvas } from "./dom.js";
-import { Listenable } from "./listenable.js";
+import { systems } from "./systems.js";
 const MAX_RENDER_SCALE = 20;
 const MIN_RENDER_SCALE = 0.5;
-export class Camera extends Listenable {
+export class Camera {
     constructor() {
-        super();
         this.top = 1080;
         this.right = 1080;
         this.left = 0;
@@ -12,11 +11,13 @@ export class Camera extends Listenable {
         this.canvasw = 0;
         this.canvash = 0;
         this.renderscale = 0;
-        this.canvasw = canvas.width;
-        this.canvash = canvas.height;
-        this.trueSizeCanvas();
-        new ResizeObserver(() => this.trueSizeCanvas()).observe(canvas);
-        this.fixRenderScale();
+        requestAnimationFrame(() => {
+            this.canvasw = canvas.width;
+            this.canvash = canvas.height;
+            this.trueSizeCanvas();
+            new ResizeObserver(() => this.trueSizeCanvas()).observe(canvas);
+            this.fixRenderScale();
+        });
     }
     trueSizeCanvas() {
         canvas.width = Math.max(1, parseInt(getComputedStyle(canvas).width)) * devicePixelRatio;
@@ -27,6 +28,7 @@ export class Camera extends Listenable {
         this.canvasw = canvas.width;
         this.canvash = canvas.height;
         this.fixRenderScale();
+        systems.renderer.renderImmediate();
     }
     fixRenderScale() {
         const minx = this.left;
@@ -35,7 +37,7 @@ export class Camera extends Listenable {
         // Just to avoid some enormous jump doing a bad thing, also cap here
         this.renderscale = Math.min(this.renderscale, MAX_RENDER_SCALE);
         this.renderscale = Math.max(this.renderscale, MIN_RENDER_SCALE);
-        this.triggerListeners();
+        systems.renderer.render();
     }
     getTransform() {
         return new DOMMatrix().

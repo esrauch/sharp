@@ -1,10 +1,11 @@
 import { canvas } from "./dom.js"
 import { Listenable } from "./listenable.js"
+import { systems } from "./systems.js"
 
 const MAX_RENDER_SCALE = 20
 const MIN_RENDER_SCALE = 0.5
 
-export class Camera extends Listenable {
+export class Camera {
     top = 1080
     right = 1080
     left = 0
@@ -15,24 +16,27 @@ export class Camera extends Listenable {
     renderscale = 0
 
     constructor() {
-        super()
-        this.canvasw = canvas.width
-        this.canvash = canvas.height
-        this.trueSizeCanvas()
-        new ResizeObserver(() => this.trueSizeCanvas()).observe(canvas)
-        this.fixRenderScale();
+        requestAnimationFrame(() => {
+            this.canvasw = canvas.width
+            this.canvash = canvas.height
+            this.trueSizeCanvas()
+            new ResizeObserver(() => this.trueSizeCanvas()).observe(canvas)
+            this.fixRenderScale();
+        })
     }
 
     trueSizeCanvas() {
         canvas.width = Math.max(1, parseInt(getComputedStyle(canvas).width)) * devicePixelRatio
         canvas.height = Math.max(1, parseInt(getComputedStyle(canvas).height)) * devicePixelRatio
         this.updateCanvasWH()
+
     }
 
     updateCanvasWH() {
         this.canvasw = canvas.width
         this.canvash = canvas.height
         this.fixRenderScale()
+        systems.renderer.renderImmediate()
     }
 
     fixRenderScale() {
@@ -44,7 +48,7 @@ export class Camera extends Listenable {
         this.renderscale = Math.min(this.renderscale, MAX_RENDER_SCALE)
         this.renderscale = Math.max(this.renderscale, MIN_RENDER_SCALE)
 
-        this.triggerListeners()
+        systems.renderer.render()
     }
 
     getTransform(): DOMMatrix {

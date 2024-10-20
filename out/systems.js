@@ -8,7 +8,6 @@ export class Systems {
         this.renderer = new Renderer();
         this.model = new Model();
         this.tool = new ToolSystem();
-        this.cam.addListener(() => this.renderer.render());
     }
 }
 export const systems = new Systems();

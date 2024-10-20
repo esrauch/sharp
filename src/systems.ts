@@ -8,10 +8,6 @@ export class Systems {
     readonly renderer = new Renderer()
     readonly model = new Model()
     readonly tool = new ToolSystem()
-
-    constructor() {
-        this.cam.addListener(() => this.renderer.render())
-    }
 }
 
 export const systems = new Systems()
