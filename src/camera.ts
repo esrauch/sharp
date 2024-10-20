@@ -1,5 +1,4 @@
 import { canvas } from "./dom.js"
-import { Listenable } from "./listenable.js"
 import { systems } from "./systems.js"
 
 const MAX_RENDER_SCALE = 20
